@@ -12,19 +12,19 @@ const songs = ["Har Har Shambhu Shiv Mahadeva(PagalWorld.com.se).mp3",
     , "Tu Jaane Na - Atif Aslam - 320Kbps.mp3",
     "Mil Jaye Mujhko Agar Sath Tera.mp3", "Manike - Thank God.mp3", "Tum Mere - Darshan Raval.mp3"
 ];
-console.log(songs.sort());
+songs.sort();
 const nameofsong = ["Har Har Shambhu Shiv Mahadeva",
     "Pyaar Karte Ho Na",
     "Raatan Lambiyan",
     "Kesariya", "Tum Hi Ho", "Tu Jaane Na", "Mil Jaye Mujhko Agar Sath Tera", "Manike - Thank God. mp3",
     "Tum Mere - Darshan Raval.mp3"];
-console.log(nameofsong.sort());
+nameofsong.sort();
 let html = "";
 const imageofsong = ["harharsambhu.jpg", "pyaarkartehona.jpg", "ratalambiya.jpg", "kesariya.jpg",
     "tum hi ho.jpg", "tu jaane na.jpg", "mil jaye mujhko agar sath tera.jpg", "manike.jpg"
     ,"tummereho.jpg"
 ];
-console.log(imageofsong.sort());
+imageofsong.sort();
 Allsongs.addEventListener('click', sidbar)
 function sidbar() {
     nameofsong.forEach((element, index) => {
@@ -136,21 +136,26 @@ let timeend = document.querySelector(".timeend");
             changevalues(++num);
         }
         myprogressbar.value = progress;
-        setTimeout(() => {
-        if (Math.floor((audioElement.currentTime) / 60) + Math.floor((audioElement.currentTime) % 60) == NaN)
-            timestart.innerText = "0 : 0";
+        // setTimeout(() => {
+        if (isNaN(audioElement.duration))
+            timestart.innerText = "Loading...";
         else {
-            timestart.innerText = `${Math.floor((audioElement.currentTime) / 60)} :  ${Math.floor((audioElement.currentTime) % 60)}`;
+                timestart.innerText = `${Math.floor(parseInt(audioElement.currentTime) / 60)} :  ${Math.floor((audioElement.currentTime) % 60)}`;
+            
         }
-        if (Math.floor((audioElement.duration) / 60)+Math.floor((audioElement.duration) % 60) == NaN)
-            timeend.innerText = "0:0"
+        if (isNaN(audioElement.duration))
+        {
+            myprogressbar.value = 0;
+            timeend.innerText = "Loading...";
+            }
+            
         else {
-            timeend.innerText = `${Math.floor((audioElement.duration) / 60)} :  ${Math.floor((audioElement.duration) % 60)}`;
+                timeend.innerText = `${Math.floor(parseInt(audioElement.duration) / 60)} :  ${Math.floor(parseInt(audioElement.duration) % 60)}`;
         }   
-        },100)
+        // },100)
     })
-    myprogressbar.addEventListener('click', (event) => {
-        let newprogress = event.offsetX;
+myprogressbar.addEventListener('click', (event) => {
+    let newprogress = event.offsetX;
         myprogressbar.value = newprogress;
         audioElement.currentTime = ((myprogressbar.value * audioElement.duration) / 175);
     })
